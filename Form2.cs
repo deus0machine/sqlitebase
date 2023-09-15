@@ -9,6 +9,7 @@ namespace sqlite
         public string owner;
         public int rating;
         public string adress;
+        public bool isOk = false;
         public Form2()
         {
             InitializeComponent();
@@ -43,6 +44,7 @@ namespace sqlite
                 owner = textBox2.Text;
                 rating = int.Parse(textBox3.Text);
                 adress = textBox4.Text;
+                isOk = true;
                 this.Close();
             }
 

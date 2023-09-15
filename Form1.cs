@@ -16,6 +16,15 @@ namespace sqlite
         private string sCurDir = string.Empty;
         private string sPath = string.Empty;//путь и имя базы данных
         private string sSql = string.Empty; //запрос
+        public SelectdCell sc; //Поля выделенной ячейки
+
+        public struct SelectdCell
+        {
+            public string SelName;
+            public string SelOwner;
+            public string SelRating;
+            public string SelAdress;
+        }
 
         public Form1()
         {
@@ -25,6 +34,7 @@ namespace sqlite
         {
             sPath = Path.Combine(Application.StartupPath, "mybd.db");
             Text = sPath; 
+
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -64,6 +74,7 @@ namespace sqlite
             }
 
             Text = "Таблица создана!";
+            button2.Enabled = true;
             mydb = null;
             return;
 
@@ -73,41 +84,34 @@ namespace sqlite
             mydb = new sqliteclass();
             Form2 f2 = new Form2();
             f2.ShowDialog();
-            string name = f2.name;
-            string owner = f2.owner;
-            int rating = f2.rating;
-            string adressh = f2.adress;
-            sSql = $@"insert into hotels (name,owner,rating,adressh) values('{name}','{owner}',{rating},{adressh});";
-            //Проверка работы
-            try
+            if (f2.isOk == true)
             {
-                if (mydb.iExecuteNonQuery(sPath, sSql, 1) == 0)
+                string name = f2.name;
+                string owner = f2.owner;
+                int rating = f2.rating;
+                string adressh = f2.adress;
+                sSql = $@"insert into hotels (name,owner,rating,adressh) values('{name}','{owner}',{rating},'{adressh}');";
+                //Проверка работы
+                try
                 {
-                    Text = "Ошибка записи!";
+                    if (mydb.iExecuteNonQuery(sPath, sSql, 1) == 0)
+                    {
+                        Text = "Ошибка записи!";
+                    }
+                    mydb = null;
+                    Text = "Запись 1 добавлена!";
                 }
-                mydb = null;
-                Text = "Запись 1 добавлена!";
-            }
-            catch (Exception ex) 
-            {
-                MessageBox.Show("Ошибка! Форма заполнена некорректно");
+                catch (Exception ex)
+                {
+                    MessageBox.Show("Ошибка! Форма заполнена некорректно");
+                }
+                button4.Enabled = true;
             }
             return;
         }
 
         private void button3_Click(object sender, EventArgs e)
         {
-            mydb = new sqliteclass();
-            //Ошибка в дате намеренная
-            sSql = @"insert into hotels (FIO,bdate,gretinyear) values('Толстой Лев Николаевич','1928-08-28',0);";
-            //Проверка работы
-            if (mydb.iExecuteNonQuery(sPath, sSql, 1) == 0)
-            {
-                Text = "Ошибка записи!";
-            }
-            mydb = null;
-            Text = "Запись 2 добавлена!";
-
         }
 
         private void button4_Click(object sender, EventArgs e)
@@ -128,16 +132,9 @@ namespace sqlite
 
             foreach (DataRow dr in datarows)
             {
-                
-                dataGridView1.Rows.Add(dr["id"], dr["FIO"]);
+                dataGridView1.Rows.Add(dr["id"], dr["name"], dr["owner"], dr["rating"], dr["adressh"]);
             }
-                foreach (DataRow dr in datarows)
-            {
-                
-                Text += dr["id"].ToString().Trim() + "  " + dr["FIO"].ToString().Trim() + "  " + dr["bdate"].ToString().Trim() + " ";
-                textBox1.Text= dr["id"].ToString().Trim() + "  " + dr["FIO"].ToString().Trim() + "  " + dr["bdate"].ToString().Trim() + " ";
-            }
-            
+            button6.Enabled = true;
         }
 
         private void button5_Click(object sender, EventArgs e)
@@ -158,7 +155,10 @@ namespace sqlite
         private void button6_Click(object sender, EventArgs e)
         {
             mydb = new sqliteclass();
-            sSql = @"Update birthday set bdate='1828-08-28' where FIO like('%Толстой%');";
+            Form3 f3 = new Form3();
+            f3.ShowDialog();
+
+            sSql = @"Update hotels set bdate='1828-08-28' where FIO like('%Толстой%');";
             //Проверка работы
             if (mydb.iExecuteNonQuery(sPath, sSql, 1) == 0)
             {
@@ -169,6 +169,14 @@ namespace sqlite
             mydb = null;
             Text = "Запись 2 исправлена!";
         }
-      
+        
+        private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            SelectdCell sc = new SelectdCell();
+            sc.SelName = dataGridView1.Rows[e.RowIndex].Cells["name"].FormattedValue.ToString();
+            sc.SelOwner = dataGridView1.Rows[e.RowIndex].Cells["owner"].FormattedValue.ToString();
+            sc.SelRating = dataGridView1.Rows[e.RowIndex].Cells["rating"].FormattedValue.ToString();
+            sc.SelAdress = dataGridView1.Rows[e.RowIndex].Cells["adress"].FormattedValue.ToString();
+        }
     }
 }
