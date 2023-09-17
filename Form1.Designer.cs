@@ -36,10 +36,10 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column2 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column3 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column4 = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.Column5 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.name = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.owner = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.rating = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.adress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -108,10 +108,10 @@
             this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
-            this.Column2,
-            this.Column3,
-            this.Column4,
-            this.Column5});
+            this.name,
+            this.owner,
+            this.rating,
+            this.adress});
             this.dataGridView1.Location = new System.Drawing.Point(12, 82);
             this.dataGridView1.Name = "dataGridView1";
             this.dataGridView1.ReadOnly = true;
@@ -123,30 +123,35 @@
             // 
             this.id.HeaderText = "id";
             this.id.Name = "id";
+            this.id.ReadOnly = true;
             this.id.Width = 30;
             // 
-            // Column2
+            // name
             // 
-            this.Column2.HeaderText = "name";
-            this.Column2.Name = "Column2";
+            this.name.HeaderText = "name";
+            this.name.Name = "name";
+            this.name.ReadOnly = true;
             // 
-            // Column3
+            // owner
             // 
-            this.Column3.HeaderText = "owner";
-            this.Column3.Name = "Column3";
-            this.Column3.Width = 150;
+            this.owner.HeaderText = "owner";
+            this.owner.Name = "owner";
+            this.owner.ReadOnly = true;
+            this.owner.Width = 150;
             // 
-            // Column4
+            // rating
             // 
-            this.Column4.HeaderText = "rating";
-            this.Column4.Name = "Column4";
-            this.Column4.Width = 50;
+            this.rating.HeaderText = "rating";
+            this.rating.Name = "rating";
+            this.rating.ReadOnly = true;
+            this.rating.Width = 50;
             // 
-            // Column5
+            // adress
             // 
-            this.Column5.HeaderText = "adress";
-            this.Column5.Name = "Column5";
-            this.Column5.Width = 200;
+            this.adress.HeaderText = "adress";
+            this.adress.Name = "adress";
+            this.adress.ReadOnly = true;
+            this.adress.Width = 200;
             // 
             // Form1
             // 
@@ -179,10 +184,10 @@
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.DataGridView dataGridView1;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column2;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column3;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column4;
-        private System.Windows.Forms.DataGridViewTextBoxColumn Column5;
+        private System.Windows.Forms.DataGridViewTextBoxColumn name;
+        private System.Windows.Forms.DataGridViewTextBoxColumn owner;
+        private System.Windows.Forms.DataGridViewTextBoxColumn rating;
+        private System.Windows.Forms.DataGridViewTextBoxColumn adress;
     }
 }
 

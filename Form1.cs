@@ -16,7 +16,7 @@ namespace sqlite
         private string sCurDir = string.Empty;
         private string sPath = string.Empty;//путь и имя базы данных
         private string sSql = string.Empty; //запрос
-        public SelectdCell sc; //Поля выделенной ячейки
+        public SelectdCell sc = new SelectdCell(); //Поля выделенной ячейки
 
         public struct SelectdCell
         {
@@ -33,8 +33,7 @@ namespace sqlite
         private void Form1_Load(object sender, EventArgs e)
         {
             sPath = Path.Combine(Application.StartupPath, "mybd.db");
-            Text = sPath; 
-
+            Text = sPath;   
         }
 
         private void button1_Click(object sender, EventArgs e)
@@ -155,24 +154,25 @@ namespace sqlite
         private void button6_Click(object sender, EventArgs e)
         {
             mydb = new sqliteclass();
-            Form3 f3 = new Form3();
+            Form3 f3 = new Form3(sc.SelName,sc.SelOwner,sc.SelRating,sc.SelAdress);
             f3.ShowDialog();
-
-            sSql = @"Update hotels set bdate='1828-08-28' where FIO like('%Толстой%');";
-            //Проверка работы
-            if (mydb.iExecuteNonQuery(sPath, sSql, 1) == 0)
+            if(f3.isOk == true)
             {
-                Text = "Ошибка обновления записи!";
+                sSql = $@"Update hotels set name='{f3.name}', owner='{f3.owner}', rating='{f3.rating}', adressh='{f3.adress}' where adressh like('{sc.SelAdress}');";
+                //Проверка работы
+                if (mydb.iExecuteNonQuery(sPath, sSql, 1) == 0)
+                {
+                    Text = "Ошибка обновления записи!";
+                    mydb = null;
+                    return;
+                }
                 mydb = null;
-                return;
+                Text = "Запись 2 исправлена!";
             }
-            mydb = null;
-            Text = "Запись 2 исправлена!";
         }
         
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            SelectdCell sc = new SelectdCell();
             sc.SelName = dataGridView1.Rows[e.RowIndex].Cells["name"].FormattedValue.ToString();
             sc.SelOwner = dataGridView1.Rows[e.RowIndex].Cells["owner"].FormattedValue.ToString();
             sc.SelRating = dataGridView1.Rows[e.RowIndex].Cells["rating"].FormattedValue.ToString();
