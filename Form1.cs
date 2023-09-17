@@ -173,10 +173,13 @@ namespace sqlite
         
         private void dataGridView1_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            sc.SelName = dataGridView1.Rows[e.RowIndex].Cells["name"].FormattedValue.ToString();
-            sc.SelOwner = dataGridView1.Rows[e.RowIndex].Cells["owner"].FormattedValue.ToString();
-            sc.SelRating = dataGridView1.Rows[e.RowIndex].Cells["rating"].FormattedValue.ToString();
-            sc.SelAdress = dataGridView1.Rows[e.RowIndex].Cells["adress"].FormattedValue.ToString();
+            if (e.RowIndex > -1)
+            {
+                sc.SelName = dataGridView1.Rows[e.RowIndex].Cells["name"].FormattedValue.ToString();
+                sc.SelOwner = dataGridView1.Rows[e.RowIndex].Cells["owner"].FormattedValue.ToString();
+                sc.SelRating = dataGridView1.Rows[e.RowIndex].Cells["rating"].FormattedValue.ToString();
+                sc.SelAdress = dataGridView1.Rows[e.RowIndex].Cells["adress"].FormattedValue.ToString();
+            }
         }
     }
 }
